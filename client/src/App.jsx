@@ -3,7 +3,7 @@ import { AppRouter } from "./routes/AppRouter"
 import "normalize.css"
 import { useContext } from "react"
 import { AuthContext } from "./context/AuthContext"
-import { RotatingSquare } from 'react-loader-spinner'
+import { TailSpin } from 'react-loader-spinner'
 
 
 function App() {
@@ -16,12 +16,13 @@ function App() {
       {
         loading ?
           <div className="w-screen h-screen flex items-center justify-center">
-            <RotatingSquare
+            <TailSpin
               visible={true}
-              height="200"
-              width="200"
+              height="120"
+              width="120"
               color="#000"
-              ariaLabel="rotating-square-loading"
+              ariaLabel="tail-spin-loading"
+              radius="1"
               wrapperStyle={{}}
               wrapperClass=""
             />
