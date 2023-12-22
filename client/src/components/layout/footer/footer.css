@@ -1,0 +1,19 @@
+.footer{
+  background-color: #000;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  p{
+    font-weight: 600;
+    color: #fff;
+    
+  }
+
+  .container-icon{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+}
