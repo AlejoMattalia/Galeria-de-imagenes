@@ -6,7 +6,7 @@ const userShema = Schema({
     required: true,
     unique: true,
     minlength: 5,
-    maxlength: 20,
+    maxlength: 16,
     trim: true
   },
 
@@ -39,7 +39,8 @@ const userShema = Schema({
 
   description: {
     type: String,
-    default: "No hay descripción"
+    default: "No hay descripción",
+    minlength:1
   },
 
   role: {

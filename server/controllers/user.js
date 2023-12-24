@@ -3,6 +3,7 @@ const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("../services/jwt");
 const jwtsimple = require("jwt-simple")
+const moment = require("moment")
 
 //Metodos
 const register = (req, res) => {
@@ -128,7 +129,14 @@ const login = (req, res) => {
       return res.status(200).json({
         status: "Success",
         message: "Iniciaste sesión correctamente",
-        user,
+        user: {
+          id: user._id,
+          username: user.username,
+          email: user.email,
+          description: user.description,
+          photo: user.photo,
+          role: user.role
+        },
         token
       })
 
@@ -146,23 +154,40 @@ const login = (req, res) => {
 //Obtener usuario a traves del token
 const get_user_through_token = (req, res) => {
 
-  const token = req.params.token;
+  return res.status(200).json({
+    status: "Success",
+    message: "Usuario obtenido a traves del token",
+    user: req.user
+  })
+}
 
-  try {
-    const user = jwtsimple.decode(token, process.env.SECRET)
 
-    return res.status(200).json({
-      status: "success",
-      message: "Usuario obtenido a traves del token",
-      user
+//Perfil del usuario
+const profile = (req, res) => {
+
+  const id = req.params.id;
+
+  User.findById(id)
+    .select({_id: 0, password: 0, role: 0})
+    .exec()
+    .then((userProfile)=>{
+
+        return res.status(200).json({
+          status: "Success",
+          message: "El perfil del usuario funciona",
+          user: userProfile
+        })
+      
+    })
+    .catch(()=>{
+
+      return res.status(200).json({
+        status: "Error",
+        message: "El perfil no existe o hay un error",
+      })
+
     })
 
-  } catch {
-    return res.status(200).json({
-      status: "Error",
-      message: "Error, No pudiste iniciar sesión",
-    })
-  }
 
 }
 
@@ -171,5 +196,6 @@ const get_user_through_token = (req, res) => {
 module.exports = {
   register,
   login,
-  get_user_through_token
+  get_user_through_token,
+  profile
 }

@@ -10,7 +10,6 @@ function App() {
 
   const { loading } = useContext(AuthContext);
 
-  console.log(loading)
   return (
     <>
       {

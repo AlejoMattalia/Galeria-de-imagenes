@@ -21,7 +21,7 @@ export function RegisterContainer() {
     validationSchema: Yup.object({
       username: Yup.string().required("Este campo es obligatorio")
         .min(5, "El nombre de usuario debe tener al menos 5 caracteres")
-        .max(20, "El nombre de usuario no puede tener más de 20 caracteres")
+        .max(16, "El nombre de usuario no puede tener más de 16 caracteres")
         .matches(/^[a-zA-Z0-9_]+$/, "Solo se permiten letras, números y guiones bajos"),
 
       email: Yup.string().required("Este campo es obligatorio")

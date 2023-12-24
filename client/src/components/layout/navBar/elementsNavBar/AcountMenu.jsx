@@ -36,6 +36,7 @@ export function AccountMenu() {
         if (willDelete) {
           setUser(undefined);
           handleClose();
+          localStorage.removeItem('token');
         }
       });
   }
@@ -93,9 +94,12 @@ export function AccountMenu() {
       >
         {user ?
           <>
-            <MenuItem onClick={handleClose}>
-              <Avatar /> Mi cuenta
-            </MenuItem>
+            <Link to={`/profile/${user.id}`}>
+              <MenuItem onClick={handleClose}>
+                <Avatar sx={{ width: 26, height: 26, background: "#fff", color: "#000", fontWeight: 600 }} alt="Descripción de la imagen"
+                  src="https://res.cloudinary.com/dl6igxwvo/image/upload/v1700088428/1-345_1_bsiip1.png"></Avatar> Mi cuenta
+              </MenuItem>
+            </Link>
             <Divider />
             <MenuItem onClick={closeSession}>
               <ListItemIcon>

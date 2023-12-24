@@ -1,0 +1,239 @@
+.container-profile {
+  width: 100%;
+  position: relative;
+  padding: 10px;
+  padding-top: 25px;
+
+  header {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: start;
+    gap: 10px;
+
+    img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    main {
+      width: 70%;
+
+      .info {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+
+        .username {
+          font-weight: 600;
+          font-size: 20px;
+        }
+
+        & .container-follow {
+          display: flex;
+          gap: 15px;
+
+          div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            & .follow-number {
+              position: relative;
+              bottom: 5px;
+              font-weight: 600;
+            }
+          }
+        }
+      }
+
+      .description-desktop {
+        display: none;
+        width: 100%;
+        margin-top: 40px;
+        padding: 0px 5% 1px 10%;
+
+        section{
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+           
+          & .title-description {
+            font-size: 15px;
+            font-weight: 600;
+          }
+        }
+
+        div {
+          border: 1px solid black;
+          padding: 5px;
+          border-radius: 10px;
+          height: 100px;
+          overflow: auto;
+        }
+      }
+    }
+  }
+
+  .description-mobile {
+    width: 100%;
+    margin-top: 40px;
+
+    section{
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0px 5px;
+       
+      & .title-description {
+        font-size: 15px;
+        font-weight: 600;
+      }
+    }
+
+
+    div {
+      border: 1px solid black;
+      padding: 5px;
+      border-radius: 10px;
+      height: 100px;
+      overflow: auto;
+    }
+  }
+
+  .container-images{
+    margin-top: 40px;
+    p{
+      font-weight: 600;
+      font-size: 20px;
+    }
+  }
+}
+
+@media (min-width: 550px) {
+  .container-profile {
+    header {
+      img {
+        width: 150px;
+        height: 150px;
+      }
+
+      main {
+        .info {
+          & .username {
+            font-size: 24px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 650px) {
+  .container-profile {
+    header {
+      main {
+        .info {
+          flex-direction: row;
+          align-items: center;
+          justify-content: center;
+          gap: 30px;
+
+          & .container-follow {
+            div {
+              flex-direction: row;
+              flex-wrap: wrap;
+              align-items: center;
+              gap: 5px;
+
+              & .follow-number {
+                bottom: 0px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 800px) {
+  .container-profile {
+    header {
+      img {
+        width: 200px;
+        height: 200px;
+      }
+
+      main {
+        .info {
+          & .username {
+            font-size: 27px;
+          }
+
+          & .container-follow {
+            p {
+              font-size: 16px;
+            }
+          }
+        }
+
+        .description-desktop {
+          display: block;
+        }
+      }
+    }
+
+    .description-mobile {
+      display: none;
+    }
+
+    .container-images{
+      margin-top: 80px;
+
+      p{
+        display: inline-block;
+        position: relative;
+        left: 50px;
+      }
+    }
+  }
+}
+
+@media (min-width: 1000px) {
+  .container-profile {
+    header {
+      img {
+        width: 250px;
+        height: 250px;
+      }
+
+      main {
+        .info {
+          gap: 20%;
+
+          & .container-follow {
+            gap: 40px;
+          }
+        }
+
+        .description-desktop {
+          padding: 0px 10% 0px 15%;
+        }
+      }
+    }
+
+    .container-images{
+      p{
+        left: 65px;
+      }
+    }
+  }
+}
