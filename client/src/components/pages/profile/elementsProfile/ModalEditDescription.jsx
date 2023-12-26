@@ -6,6 +6,9 @@ import * as Yup from "yup";
 import Toastify from "toastify-js";
 import "toastify-js/src/toastify.css";
 import { Button, TextField } from "@mui/material";
+import axios from "axios"
+import { useContext } from "react";
+import { AuthContext } from "../../../../context/AuthContext";
 
 const style = {
   position: "absolute",
@@ -22,20 +25,61 @@ const style = {
 export function ModalEditDescription({
   setOpenModalDescription,
   openModalDescription,
+  description,
+  updateProfileData
 }) {
 
-  const {handleSubmit, handleChange, values, errors} = useFormik({
+  const {token} = useContext(AuthContext);
+
+  const { handleSubmit, handleChange, errors } = useFormik({
     initialValues: {
       description: ""
     },
 
     validationSchema: Yup.object({
-      description: Yup.string().required("Debes ingresar una descripción")
-      .min(1, "El nombre de usuario debe tener al menos 1 caracteres")
+      description: Yup.string().required("Debes ingresar algo")
+        .min(1, "El nombre de usuario debe tener al menos 1 caracteres")
     }),
 
     onSubmit: (data) => {
-      console.log(data)
+
+      axios.patch(`http://localhost:4000/api/user/update`, data, {
+        headers: {
+          'Authorization': `${token}`
+        }
+      })
+        .then((res) => {
+          Toastify({
+            text: res.data.message,
+            duration: 3000,
+            close: true,
+            gravity: "top",
+            position: "right",
+            stopOnFocus: true,
+            style: {
+              background: "#25D366",
+            },
+          }).showToast();
+
+          setOpenModalDescription(false);
+          updateProfileData(res.data.user)
+        })
+        .catch((err) => {
+          console.log(err)
+          if (err) {
+            Toastify({
+              text: err.response.data.message,
+              duration: 3000,
+              close: true,
+              gravity: "top",
+              position: "right",
+              stopOnFocus: true,
+              style: {
+                background: "red",
+              },
+            }).showToast();
+          }
+        })
     }
   })
 
@@ -63,9 +107,9 @@ export function ModalEditDescription({
               style={{ width: "100%" }}
               name="description"
               onChange={handleChange}
-              value={values.description}
               error={errors.description}
               helperText={errors.description}
+              defaultValue={description}
             />
 
             <div className="w-full flex items-center justify-end mt-2">

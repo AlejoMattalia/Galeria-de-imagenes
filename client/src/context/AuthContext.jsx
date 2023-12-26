@@ -12,8 +12,6 @@ export function AuthContextProvider({children}) {
   const effectStart = useRef(false);
   const token = localStorage.getItem("token");
 
-console.log(user)
-
   useEffect(() => {
     // Verificamos si el efecto ya se ejecutó antes
     if (!effectStart.current) {
@@ -25,7 +23,6 @@ console.log(user)
           }
         })
           .then((res) => {
-            console.log(res);
             let user = res.data.user;
             setUser(user);
           })

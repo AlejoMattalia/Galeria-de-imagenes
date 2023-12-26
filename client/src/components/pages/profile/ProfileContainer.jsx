@@ -10,6 +10,8 @@ export function ProfileContainer() {
   const [profileData, setProfileData] = useState(null);
   const {id} = useParams();
   const [openModalDescription, setOpenModalDescription] = useState(false);
+  const [openModalPhoto, setOpenModalPhoto] = useState(false);
+  const [imageProfile, setImageProfile] = useState(null)
 
 
   useEffect(()=>{
@@ -25,14 +27,40 @@ export function ProfileContainer() {
     .catch((err)=>{   
       console.log(err)
     })
-
   },[id])
+
+
+  useEffect(()=>{
+    axios.get(`http://localhost:4000/api/user/show_image/profiles-images-1703566529887-certificadoWebExperto.jpg`, {
+      headers: {
+        'Authorization': `${token}`
+      }
+    })
+    .then((res)=>{
+
+      
+    })
+    .catch((err)=>{   
+      console.log(err)
+    })
+  },[])
+
+  const updateProfileData = (data) => {
+    setProfileData(data)
+  }
+
+
+
 
   const data = {
     profileData,
     user,
     setOpenModalDescription,
-    openModalDescription
+    openModalDescription,
+    openModalPhoto, 
+    setOpenModalPhoto,
+    updateProfileData,
+    imageProfile
   }
   
   return (

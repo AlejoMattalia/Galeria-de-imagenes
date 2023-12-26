@@ -2,8 +2,8 @@
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("../services/jwt");
-const jwtsimple = require("jwt-simple")
-const moment = require("moment")
+const fs = require("fs");
+const path = require("path")
 
 //Metodos
 const register = (req, res) => {
@@ -168,18 +168,18 @@ const profile = (req, res) => {
   const id = req.params.id;
 
   User.findById(id)
-    .select({_id: 0, password: 0, role: 0})
+    .select({ _id: 0, password: 0, role: 0 })
     .exec()
-    .then((userProfile)=>{
+    .then((userProfile) => {
 
-        return res.status(200).json({
-          status: "Success",
-          message: "El perfil del usuario funciona",
-          user: userProfile
-        })
-      
+      return res.status(200).json({
+        status: "Success",
+        message: "El perfil del usuario funciona",
+        user: userProfile
+      })
+
     })
-    .catch(()=>{
+    .catch(() => {
 
       return res.status(200).json({
         status: "Error",
@@ -187,15 +187,152 @@ const profile = (req, res) => {
       })
 
     })
+}
+
+
+const update = (req, res) => {
+
+  const id = req.user.id;
+  const userUpdate = req.body;
+  const nameKey = Object.keys(userUpdate)
+  let name = "";
+
+  if (nameKey[0] === "description") {
+    name = "la descripción"
+  } else if (nameKey[0] === "photo") {
+    name = "la foto"
+  }
+
+  //Verificar si el usuario existe
+  User.findById(id).exec()
+    .then((user) => {
+
+      if (!user) {
+        return res.status(404).json({
+          status: "Error",
+          message: `Error, no pudiste editar ${name}`
+        })
+      }
+
+      if (userUpdate[nameKey[0]] === "") {
+        return res.status(404).json({
+          status: "Error",
+          message: `Error, no pudiste editar ${name}`
+        })
+      }
+
+      User.findOneAndUpdate({ _id: id }, userUpdate, { new: true }).select({ _id: 0, password: 0, role: 0 }).exec()
+        .then((newUser) => {
+          return res.status(200).json({
+            status: "Success",
+            message: `Actualizaste correctamente ${name}`,
+            user: newUser
+          })
+        })
+        .catch(() => {
+          return res.status(404).json({
+            status: "Error",
+            message: `Error, no pudiste editar ${name}`
+          })
+        })
+
+
+    })
+    .catch(() => {
+      return res.status(404).json({
+        status: "Error",
+        message: `Error, no pudiste editar ${name}`
+      })
+    })
+}
+
+
+
+const upload_image = (req, res) => {
+  let id = req.user.id;
+
+  if (!req.file) {
+    return res.status(500).json({
+      status: "Error",
+      message: `No pudiste actualizar la foto de perfil porque no es un file`,
+    })
+  }
+
+  const image = req.file.originalname;
+  const imageSplit = image.split(".");
+  const extension = imageSplit[1];
+
+  if (extension !== "jpeg" && extension !== "jpg" && extension !== "png") {
+
+    fs.unlink(req.file.path, (error) => {
+      return res.status(400).json({
+        status: "Error",
+        message: `No puedes subir imágenes con la extensión ${extension}`
+      });
+    });
+  } else {
+
+    User.findOneAndUpdate(
+      { _id: id },
+      { photo: req.file.filename },
+      { new: true }
+    )
+      .exec()
+      .then(userUpdate => {
+        if (!userUpdate) {
+          return res.status(400).json({
+            status: "Error",
+            message: `No pudiste actualizar la foto de perfil`,
+          });
+        }
+
+        return res.status(200).json({
+          status: "Success",
+          message: `Actualizaste la foto de perfil correctamente`,
+          photoUpdate: userUpdate.photo
+        });
+      })
+      .catch(err => {
+        console.log(err)
+        return res.status(500).json({
+          status: "Error",
+          message: `No pudiste actualizar la foto de perfil`,
+        });
+      });
+  }
+}
+
+
+const show_image = (req, res) => {
+
+  const file = req.params.file;
+  const filePath = "./images/profiles-images/" + file;
+
+  console.log(filePath)
+
+  fs.stat(filePath, (error, exists) => {
+
+    if (exists) {
+      return res.sendFile(path.resolve(filePath))
+    } else {
+      return res.status(400).json({
+        status: "Error",
+        message: "No existe la imagen"
+      })
+    }
+
+  })
 
 
 }
-
 
 
 module.exports = {
   register,
   login,
   get_user_through_token,
-  profile
+  profile,
+  update,
+  upload_image,
+  show_image
 }

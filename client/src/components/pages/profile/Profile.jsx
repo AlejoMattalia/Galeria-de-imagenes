@@ -3,10 +3,13 @@ import "./profile.css";
 import { TailSpin } from 'react-loader-spinner'
 import { ModalEditDescription } from "./elementsProfile/ModalEditDescription";
 import EditIcon from '@mui/icons-material/Edit';
+import { ModalEditPhoto } from "./elementsProfile/ModalEditPhoto";
 
 export function Profile({ data }) {
 
-  const { profileData, user, setOpenModalDescription, openModalDescription } = data;
+  const { profileData, user, setOpenModalDescription, openModalDescription, openModalPhoto, setOpenModalPhoto, updateProfileData, imageProfile } = data;
+
+  console.log(imageProfile)
 
   return (
     <>
@@ -17,7 +20,11 @@ export function Profile({ data }) {
             <section className="container-profile">
 
               <header>
-                <img src="https://res.cloudinary.com/dl6igxwvo/image/upload/v1703353289/usuario_a0btea.png" alt="" />
+
+                <div className="relative p-2 min-[550px]:p-0">
+                  <img src="https://res.cloudinary.com/dl6igxwvo/image/upload/v1703353289/usuario_a0btea.png" alt="" />
+                  <EditIcon onClick={() => setOpenModalPhoto(true)} style={{cursor: "pointer", position: "absolute", top: 0, right: 0}}/>
+                </div>
 
                 <main>
                   <div className="info">
@@ -70,7 +77,12 @@ export function Profile({ data }) {
 
               {
                 openModalDescription &&
-                <ModalEditDescription setOpenModalDescription={setOpenModalDescription} openModalDescription={openModalDescription}/>
+                <ModalEditDescription setOpenModalDescription={setOpenModalDescription} openModalDescription={openModalDescription} description={profileData.description} updateProfileData={updateProfileData}/>
+              }
+
+              {
+                openModalPhoto &&
+                <ModalEditPhoto openModalPhoto={openModalPhoto} setOpenModalPhoto={setOpenModalPhoto}/>
               }
 
             </section>
