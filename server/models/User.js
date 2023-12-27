@@ -7,7 +7,11 @@ const userShema = Schema({
     unique: true,
     minlength: 5,
     maxlength: 16,
-    trim: true
+    trim: true,
+    match: [
+      /^[a-zA-Z0-9_]+$/,
+      'Solo se permiten letras, números y guiones bajos',
+    ],
   },
 
   email: {

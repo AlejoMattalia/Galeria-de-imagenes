@@ -6,49 +6,40 @@ import { useParams } from "react-router-dom";
 
 export function ProfileContainer() {
 
-  const {token, user} = useContext(AuthContext);
-  const [profileData, setProfileData] = useState(null);
-  const {id} = useParams();
+  const { token, user, setProfileData, profileData, imageProfile } = useContext(AuthContext);
+  // const [profileData, setProfileData] = useState(null);
+  const { id } = useParams();
   const [openModalDescription, setOpenModalDescription] = useState(false);
   const [openModalPhoto, setOpenModalPhoto] = useState(false);
-  const [imageProfile, setImageProfile] = useState(null)
+  const [openModalUsername, setOpenModalUsername] = useState(false);
+  const [viewButtonsEdit, setViewButtonEdit] = useState(false);
 
 
-  useEffect(()=>{
+  useEffect(() => {
 
-    axios.get(`http://localhost:4000/api/user/profile/${id}`, {
+    axios.get(`http://localhost:4000/api/user/profile/${user.id}`, {
       headers: {
         'Authorization': `${token}`
       }
     })
-    .then((res)=>{
-      setProfileData(res.data.user) 
-    })
-    .catch((err)=>{   
-      console.log(err)
-    })
-  },[id])
+      .then((res) => {
+        setProfileData(res.data.user)
 
+        if(user.id === id){
+          setViewButtonEdit(true)
+        }else{
+          setViewButtonEdit(false)
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }, [id])
 
-  useEffect(()=>{
-    axios.get(`http://localhost:4000/api/user/show_image/profiles-images-1703566529887-certificadoWebExperto.jpg`, {
-      headers: {
-        'Authorization': `${token}`
-      }
-    })
-    .then((res)=>{
-
-      
-    })
-    .catch((err)=>{   
-      console.log(err)
-    })
-  },[])
 
   const updateProfileData = (data) => {
     setProfileData(data)
   }
-
 
 
 
@@ -57,13 +48,16 @@ export function ProfileContainer() {
     user,
     setOpenModalDescription,
     openModalDescription,
-    openModalPhoto, 
+    openModalPhoto,
     setOpenModalPhoto,
     updateProfileData,
-    imageProfile
+    imageProfile,
+    setOpenModalUsername,
+    openModalUsername,
+    viewButtonsEdit
   }
-  
+
   return (
-    <Profile data={data}/>
+    <Profile data={data} />
   )
 }

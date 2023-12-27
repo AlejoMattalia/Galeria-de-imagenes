@@ -5,7 +5,7 @@ import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 
 export function Footer() {
   return (
-    <section className="footer">
+    <section className="footer w-full">
       <p>Alejo Mattalia</p>
 
       <div className="container-icon">

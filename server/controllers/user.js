@@ -168,7 +168,7 @@ const profile = (req, res) => {
   const id = req.params.id;
 
   User.findById(id)
-    .select({ _id: 0, password: 0, role: 0 })
+    .select({password: 0})
     .exec()
     .then((userProfile) => {
 
@@ -221,12 +221,16 @@ const update = (req, res) => {
         })
       }
 
-      User.findOneAndUpdate({ _id: id }, userUpdate, { new: true }).select({ _id: 0, password: 0, role: 0 }).exec()
+      User.findOneAndUpdate({ _id: id }, userUpdate, { new: true }).select({password: 0}).exec()
         .then((newUser) => {
+
+          const token = jwt.createToken(newUser);
+
           return res.status(200).json({
             status: "Success",
             message: `Actualizaste correctamente ${name}`,
-            user: newUser
+            user: newUser,
+            token
           })
         })
         .catch(() => {
@@ -277,8 +281,12 @@ const upload_image = (req, res) => {
       { photo: req.file.filename },
       { new: true }
     )
+      .select({ password: 0 })
       .exec()
       .then(userUpdate => {
+        
+        const token = jwt.createToken(userUpdate);
+
         if (!userUpdate) {
           return res.status(400).json({
             status: "Error",
@@ -286,10 +294,21 @@ const upload_image = (req, res) => {
           });
         }
 
+        if(req.user.photo !== "default.png"){
+          fs.unlink(`images/profiles-images/${req.user.photo}`, (error) => {
+            if (error) {
+              console.error(error);
+            }
+
+            console.log("Imagen eliminada correctamente")
+          });
+        }
+
         return res.status(200).json({
           status: "Success",
           message: `Actualizaste la foto de perfil correctamente`,
-          photoUpdate: userUpdate.photo
+          user: userUpdate,
+          token,
         });
       })
       .catch(err => {
@@ -304,7 +323,6 @@ const upload_image = (req, res) => {
 
 
 const show_image = (req, res) => {
-
   const file = req.params.file;
   const filePath = "./images/profiles-images/" + file;
 
@@ -322,8 +340,6 @@ const show_image = (req, res) => {
     }
 
   })
-
-
 }
 
 

@@ -4,12 +4,13 @@ import { TailSpin } from 'react-loader-spinner'
 import { ModalEditDescription } from "./elementsProfile/ModalEditDescription";
 import EditIcon from '@mui/icons-material/Edit';
 import { ModalEditPhoto } from "./elementsProfile/ModalEditPhoto";
+import { ModalEditUsername } from "./elementsProfile/ModalEditUsername";
 
 export function Profile({ data }) {
 
-  const { profileData, user, setOpenModalDescription, openModalDescription, openModalPhoto, setOpenModalPhoto, updateProfileData, imageProfile } = data;
+  const { profileData, user, setOpenModalDescription, openModalDescription, openModalPhoto, setOpenModalPhoto, updateProfileData, imageProfile, setOpenModalUsername,
+    openModalUsername, viewButtonsEdit } = data;
 
-  console.log(imageProfile)
 
   return (
     <>
@@ -21,14 +22,26 @@ export function Profile({ data }) {
 
               <header>
 
-                <div className="relative p-2 min-[550px]:p-0">
-                  <img src="https://res.cloudinary.com/dl6igxwvo/image/upload/v1703353289/usuario_a0btea.png" alt="" />
-                  <EditIcon onClick={() => setOpenModalPhoto(true)} style={{cursor: "pointer", position: "absolute", top: 0, right: 0}}/>
+                <div className="relative p-3 min-[550px]:p-0">
+                  <img src={imageProfile} alt="" />
+
+                  {
+                    viewButtonsEdit &&
+                   <EditIcon onClick={() => setOpenModalPhoto(true)} style={{ cursor: "pointer", position: "absolute", top: 0, right: 0 }} />
+                  }
                 </div>
 
                 <main>
                   <div className="info">
-                    <p className="username">{profileData.username}</p>
+
+                    <div className="relative p-5">
+                      <p className="username">{profileData.username}</p>
+                      {
+                        viewButtonsEdit &&
+                        <EditIcon onClick={() => setOpenModalUsername(true)} style={{ cursor: "pointer", position: "absolute", top: 0, right: 0 }} />
+                      }
+                    </div>
+
 
                     <section className="container-follow">
 
@@ -48,7 +61,10 @@ export function Profile({ data }) {
                   <div className="description-desktop">
                     <section>
                       <p className="title-description">DESCRIPCIÓN</p>
-                      <EditIcon onClick={() => setOpenModalDescription(true)} style={{cursor: "pointer"}}/>
+                      {
+                        viewButtonsEdit &&
+                        <EditIcon onClick={() => setOpenModalDescription(true)} style={{ cursor: "pointer" }} />
+                      }
                     </section>
 
                     <div>
@@ -62,7 +78,10 @@ export function Profile({ data }) {
               <div className="description-mobile">
                 <section>
                   <p className="title-description">DESCRIPCIÓN</p>
-                  <EditIcon onClick={() => setOpenModalDescription(true)} style={{cursor: "pointer"}}/>
+                  {
+                    viewButtonsEdit &&
+                    <EditIcon onClick={() => setOpenModalDescription(true)} style={{ cursor: "pointer" }} />
+                  }
                 </section>
 
                 <div>
@@ -77,12 +96,17 @@ export function Profile({ data }) {
 
               {
                 openModalDescription &&
-                <ModalEditDescription setOpenModalDescription={setOpenModalDescription} openModalDescription={openModalDescription} description={profileData.description} updateProfileData={updateProfileData}/>
+                <ModalEditDescription setOpenModalDescription={setOpenModalDescription} openModalDescription={openModalDescription} description={profileData.description} updateProfileData={updateProfileData} />
               }
 
               {
                 openModalPhoto &&
-                <ModalEditPhoto openModalPhoto={openModalPhoto} setOpenModalPhoto={setOpenModalPhoto}/>
+                <ModalEditPhoto openModalPhoto={openModalPhoto} setOpenModalPhoto={setOpenModalPhoto} updateProfileData={updateProfileData} />
+              }
+
+              {
+                openModalUsername &&
+                <ModalEditUsername openModalUsername={openModalUsername} setOpenModalUsername={setOpenModalUsername} updateProfileData={updateProfileData} username={profileData.username}/>
               }
 
             </section>

@@ -11,6 +11,10 @@ export function AuthContextProvider({children}) {
   const [loading, setLoading] = useState(true);
   const effectStart = useRef(false);
   const token = localStorage.getItem("token");
+  const [profileData, setProfileData] = useState(null);
+  const [imageProfile, setImageProfile] = useState(null)
+
+
 
   useEffect(() => {
     // Verificamos si el efecto ya se ejecutó antes
@@ -25,6 +29,7 @@ export function AuthContextProvider({children}) {
           .then((res) => {
             let user = res.data.user;
             setUser(user);
+            setProfileData(user)
           })
           .catch((err) => {
             Toastify({
@@ -51,7 +56,25 @@ export function AuthContextProvider({children}) {
     }
   }, [user, token]); // Dependencia adicional para evitar un bucle infinito si setUser actualiza el estado
 
+  useEffect(() => {
+    if (profileData) {
+      axios.get(`http://localhost:4000/api/user/show_image/${profileData.photo}`, {
+        headers: {
+          'Authorization': `${token}`
+        },
+        responseType: 'blob' // Esto indica que esperas una respuesta en formato Blob.
+      })
+        .then((res) => {
+          const imageUrl = URL.createObjectURL(new Blob([res.data]));
+          setImageProfile(imageUrl)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
+  }, [profileData])
   
+
   
   const data = {
     setUser,
@@ -59,6 +82,9 @@ export function AuthContextProvider({children}) {
     loading,
     setLoading,
     token,
+    setProfileData,
+    profileData,
+    imageProfile, 
   }
 
   return (

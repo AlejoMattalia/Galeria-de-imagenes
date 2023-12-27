@@ -14,7 +14,7 @@ import swal from 'sweetalert'
 
 export function AccountMenu() {
   //Usuario
-  const { user, setUser } = useContext(AuthContext)
+  const { user, setUser, imageProfile } = useContext(AuthContext)
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -97,7 +97,7 @@ export function AccountMenu() {
             <Link to={`/profile/${user.id}`}>
               <MenuItem onClick={handleClose}>
                 <Avatar sx={{ width: 26, height: 26, background: "#fff", color: "#000", fontWeight: 600 }} alt="Descripción de la imagen"
-                  src="https://res.cloudinary.com/dl6igxwvo/image/upload/v1700088428/1-345_1_bsiip1.png"></Avatar> Mi cuenta
+                  src={imageProfile}></Avatar> Mi cuenta
               </MenuItem>
             </Link>
             <Divider />

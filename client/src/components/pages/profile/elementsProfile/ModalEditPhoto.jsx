@@ -24,7 +24,7 @@ const style = {
 
 // ...
 
-export function ModalEditPhoto({ openModalPhoto, setOpenModalPhoto }) {
+export function ModalEditPhoto({ openModalPhoto, setOpenModalPhoto, updateProfileData}) {
   const { token } = useContext(AuthContext);
 
   const { handleSubmit, setFieldValue, errors} = useFormik({
@@ -47,7 +47,6 @@ export function ModalEditPhoto({ openModalPhoto, setOpenModalPhoto }) {
         }
       })
         .then((res) => {
-
           Toastify({
             text: res.data.message,
             duration: 3000,
@@ -61,6 +60,8 @@ export function ModalEditPhoto({ openModalPhoto, setOpenModalPhoto }) {
           }).showToast();
 
           setOpenModalPhoto(false)
+          updateProfileData(res.data.user)
+          localStorage.setItem('token', res.data.token);
         })
         .catch((err) => {
           console.log(err)

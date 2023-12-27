@@ -4,10 +4,12 @@ import {Outlet} from "react-router-dom"
 
 export function Layout() {
   return (
-    <>
+    <div className="min-h-screen flex flex-col items-center justify-between">
       <NavBarContainer/>
-      <Outlet/>
+      <div className="w-full" style={{minHeight: "77vh"}}>
+        <Outlet/>
+      </div>
       <Footer/>
-    </>
+    </div>
   )
 }
