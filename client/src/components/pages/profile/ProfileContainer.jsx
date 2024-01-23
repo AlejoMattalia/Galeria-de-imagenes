@@ -13,7 +13,10 @@ export function ProfileContainer() {
   const [openModalPhoto, setOpenModalPhoto] = useState(false);
   const [openModalUsername, setOpenModalUsername] = useState(false);
   const [viewButtonsEdit, setViewButtonEdit] = useState(false);
-
+  const [countFollowing, setCountFollowing] = useState(0);
+  const [countFollowers, setCountFollowers] = useState(0);
+  const [openModalFollowing, setOpenModalFollowing] = useState(false);
+  const [openModalFollowers, setOpenModalFollowers] = useState(false)
 
   useEffect(() => {
 
@@ -41,7 +44,18 @@ export function ProfileContainer() {
     setProfileData(data)
   }
 
+  useEffect(()=>{
 
+    axios.get(`http://localhost:4000/api/follow/followsUserIds/${id}`)
+      .then((res)=>{
+        setCountFollowing(res.data.following.length);
+        setCountFollowers(res.data.followers.length)
+      })
+      .catch((err)=>{
+        console.log(err)
+      })
+
+  },[id])
 
   const data = {
     profileData,
@@ -54,7 +68,14 @@ export function ProfileContainer() {
     imageProfile,
     setOpenModalUsername,
     openModalUsername,
-    viewButtonsEdit
+    viewButtonsEdit,
+    countFollowing,
+    countFollowers,
+    openModalFollowing, 
+    setOpenModalFollowing,
+    openModalFollowers, 
+    setOpenModalFollowers,
+    id
   }
 
   return (

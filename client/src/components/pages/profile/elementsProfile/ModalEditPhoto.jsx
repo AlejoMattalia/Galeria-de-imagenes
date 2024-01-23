@@ -61,6 +61,7 @@ export function ModalEditPhoto({ openModalPhoto, setOpenModalPhoto, updateProfil
 
           setOpenModalPhoto(false)
           updateProfileData(res.data.user)
+          localStorage.removeItem('token');
           localStorage.setItem('token', res.data.token);
         })
         .catch((err) => {

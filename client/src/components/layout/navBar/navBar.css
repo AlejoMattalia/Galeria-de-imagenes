@@ -30,6 +30,7 @@
 .container-search{
   z-index: 100;
   position: absolute;
+  left: 0;
   width: 100%;
   background-color: black;
   padding: 15px 30px;

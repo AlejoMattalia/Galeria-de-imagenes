@@ -325,9 +325,7 @@ const upload_image = (req, res) => {
 const show_image = (req, res) => {
   const file = req.params.file;
   const filePath = "./images/profiles-images/" + file;
-
-  console.log(filePath)
-
+  
   fs.stat(filePath, (error, exists) => {
 
     if (exists) {

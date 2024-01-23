@@ -1,6 +1,7 @@
 import { HomeContainer } from "../components/pages/home/HomeContainer";
 import { LoginContainer } from "../components/pages/login/LoginContainer";
 import { ProfileContainer } from "../components/pages/profile/ProfileContainer";
+import { ProfileUsersContianer } from "../components/pages/profile/profilesUsers/ProfileUsersContainer";
 import {RegisterContainer} from "../components/pages/register/RegisterContainer";
 
 export const routes = [
@@ -26,5 +27,11 @@ export const routes = [
     id: "profile",
     path: "/profile/:id",
     Element: ProfileContainer
+  },
+
+  {
+    id: "profileUsers",
+    path: "/users/profile/:id",
+    Element: ProfileUsersContianer
   }
 ]

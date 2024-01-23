@@ -5,11 +5,13 @@ import { ModalEditDescription } from "./elementsProfile/ModalEditDescription";
 import EditIcon from '@mui/icons-material/Edit';
 import { ModalEditPhoto } from "./elementsProfile/ModalEditPhoto";
 import { ModalEditUsername } from "./elementsProfile/ModalEditUsername";
+import { ModalFollows } from "../../common/ModalFollows";
 
 export function Profile({ data }) {
 
   const { profileData, user, setOpenModalDescription, openModalDescription, openModalPhoto, setOpenModalPhoto, updateProfileData, imageProfile, setOpenModalUsername,
-    openModalUsername, viewButtonsEdit } = data;
+    openModalUsername, viewButtonsEdit, countFollowing,
+    countFollowers, openModalFollowing, setOpenModalFollowing, openModalFollowers, setOpenModalFollowers, id } = data;
 
 
   return (
@@ -27,7 +29,7 @@ export function Profile({ data }) {
 
                   {
                     viewButtonsEdit &&
-                   <EditIcon onClick={() => setOpenModalPhoto(true)} style={{ cursor: "pointer", position: "absolute", top: 0, right: 0 }} />
+                    <EditIcon onClick={() => setOpenModalPhoto(true)} style={{ cursor: "pointer", position: "absolute", top: 0, right: 0 }} />
                   }
                 </div>
 
@@ -45,14 +47,14 @@ export function Profile({ data }) {
 
                     <section className="container-follow">
 
-                      <div>
+                      <div onClick={()=> setOpenModalFollowers(true)} className="cursor-pointer">
                         <p>Seguidores</p>
-                        <p className="follow-number">1000</p>
+                        <p className="follow-number">{countFollowers}</p>
                       </div>
 
-                      <div>
+                      <div onClick={()=> setOpenModalFollowing(true)} className="cursor-pointer">
                         <p>Seguidos</p>
-                        <p className="follow-number">900</p>
+                        <p className="follow-number">{countFollowing}</p>
                       </div>
 
                     </section>
@@ -106,7 +108,7 @@ export function Profile({ data }) {
 
               {
                 openModalUsername &&
-                <ModalEditUsername openModalUsername={openModalUsername} setOpenModalUsername={setOpenModalUsername} updateProfileData={updateProfileData} username={profileData.username}/>
+                <ModalEditUsername openModalUsername={openModalUsername} setOpenModalUsername={setOpenModalUsername} updateProfileData={updateProfileData} username={profileData.username} />
               }
 
             </section>
@@ -129,6 +131,10 @@ export function Profile({ data }) {
             <Navigate to="/" />
           </>
       }
+
+      {openModalFollowing && <ModalFollows open={openModalFollowing} setOpen={setOpenModalFollowing} id={id} followingOrFollowers="following" />}
+
+      {openModalFollowers && <ModalFollows open={openModalFollowers} setOpen={setOpenModalFollowers} id={id} followingOrFollowers="followers" />}
     </>
 
   )

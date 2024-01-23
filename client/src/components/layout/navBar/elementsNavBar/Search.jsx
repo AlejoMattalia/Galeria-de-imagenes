@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 export function Search({showSearch}) {  
   return (
     <motion.section className="container-search" initial={{ y: -100 }}
-    animate={showSearch ? { y: 0 } : { y: -120 }}
+    animate={showSearch ? { y: -5 } : { y: -120 }}
     transition={{ duration: 1.5 }}>
 
       <div className="search">

@@ -15,7 +15,6 @@ export function AuthContextProvider({children}) {
   const [imageProfile, setImageProfile] = useState(null)
 
 
-
   useEffect(() => {
     // Verificamos si el efecto ya se ejecutó antes
     if (!effectStart.current) {
@@ -56,15 +55,15 @@ export function AuthContextProvider({children}) {
     }
   }, [user, token]); // Dependencia adicional para evitar un bucle infinito si setUser actualiza el estado
 
+ 
+
   useEffect(() => {
     if (profileData) {
       axios.get(`http://localhost:4000/api/user/show_image/${profileData.photo}`, {
-        headers: {
-          'Authorization': `${token}`
-        },
         responseType: 'blob' // Esto indica que esperas una respuesta en formato Blob.
       })
         .then((res) => {
+          console.log(res)
           const imageUrl = URL.createObjectURL(new Blob([res.data]));
           setImageProfile(imageUrl)
         })
@@ -84,7 +83,7 @@ export function AuthContextProvider({children}) {
     token,
     setProfileData,
     profileData,
-    imageProfile, 
+    imageProfile
   }
 
   return (

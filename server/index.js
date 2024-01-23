@@ -31,8 +31,10 @@ app.use(express.urlencoded({extended: true}));
 
 //Rutas
 const userRoutes = require("./routes/user");
+const folloeRoutes = require("./routes/follow");
 
 app.use("/api/user", userRoutes);
+app.use("/api/follow", folloeRoutes)
 
 
 //rutas de pruebas
