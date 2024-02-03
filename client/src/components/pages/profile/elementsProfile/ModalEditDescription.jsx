@@ -43,7 +43,7 @@ export function ModalEditDescription({
 
     onSubmit: (data) => {
 
-      axios.patch(`http://localhost:4000/api/user/update`, data, {
+      axios.patch(`https://galeria-imagenes-five.vercel.app/api/user/update`, data, {
         headers: {
           'Authorization': `${token}`
         }

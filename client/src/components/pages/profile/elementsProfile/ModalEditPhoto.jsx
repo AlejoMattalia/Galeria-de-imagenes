@@ -40,7 +40,7 @@ export function ModalEditPhoto({ openModalPhoto, setOpenModalPhoto, updateProfil
       const formData = new FormData();
       formData.append("file0", data.file);
 
-      axios.post("http://localhost:4000/api/user/upload_image", formData, {
+      axios.post("https://galeria-imagenes-five.vercel.app/api/user/upload_image", formData, {
         headers: {
           'Authorization': `${token}`,
           'Content-Type': 'multipart/form-data'

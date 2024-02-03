@@ -38,7 +38,7 @@ export function ModalFollows({ open, setOpen, id, followingOrFollowers }) {
         }
 
         const response = await axios.get(
-          `http://localhost:4000/api/user/show_image/${photo}`,
+          `https://galeria-imagenes-five.vercel.app/api/user/show_image/${photo}`,
           {
             responseType: "blob",
           }
@@ -63,7 +63,7 @@ export function ModalFollows({ open, setOpen, id, followingOrFollowers }) {
     if (id) {
       if (followingOrFollowers === "following") {
         axios
-          .get(`http://localhost:4000/api/follow/following/${id}/${page}`)
+          .get(`https://galeria-imagenes-five.vercel.app/api/follow/following/${id}/${page}`)
           .then((res) => {
             if (res.data.follows.length === 0) {
               setHasMore(false);
@@ -76,7 +76,7 @@ export function ModalFollows({ open, setOpen, id, followingOrFollowers }) {
           });
       } else if (followingOrFollowers === "followers") {
         axios
-          .get(`http://localhost:4000/api/follow/followers/${id}/${page}`)
+          .get(`https://galeria-imagenes-five.vercel.app/api/follow/followers/${id}/${page}`)
           .then((res) => {
             if (res.data.follows.length === 0) {
               setHasMore(false);
