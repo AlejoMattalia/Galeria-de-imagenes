@@ -333,7 +333,9 @@ const show_image = (req, res) => {
     } else {
       return res.status(400).json({
         status: "Error",
-        message: "No existe la imagen"
+        message: "No existe la imagen",
+        file,
+        filePath
       })
     }
 
