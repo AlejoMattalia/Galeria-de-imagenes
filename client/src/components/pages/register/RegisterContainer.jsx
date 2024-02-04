@@ -42,7 +42,7 @@ export function RegisterContainer() {
     onSubmit: (data) => {
 
       if (data) {
-        axios.post("https://galeria-imagenes-five.vercel.app/api/user/register", data)
+        axios.post("https://galeria-imagenes-pi.vercel.app/api/user/register", data)
           .then((res) => {
             if (res) {
               setUser(res.data.user);

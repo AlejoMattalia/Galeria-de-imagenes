@@ -25,9 +25,10 @@ export function LoginContainer() {
     }),
 
     onSubmit: (data) => {
-      axios.post("https://galeria-imagenes-five.vercel.app/api/user/login", data)
+      console.log(data)
+      axios.post("https://galeria-imagenes-pi.vercel.app/api/user/login", data)
         .then((res) => {
-
+          console.log(res)
           if (res) {
             localStorage.setItem('token', res.data.token);
             setUser(res.data.user);
@@ -48,7 +49,7 @@ export function LoginContainer() {
           resetForm();
         })
         .catch((err) => {
-          console.log(err.response.data)
+          console.log(err)
 
           let error;
 
