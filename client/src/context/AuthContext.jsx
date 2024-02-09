@@ -20,7 +20,7 @@ export function AuthContextProvider({children}) {
     if (!effectStart.current) {
 
       if (token) {
-        axios.get(`https://galeria-imagenes-pi.vercel.app/api/user/user_through_token`, {
+        axios.get(`http://localhost:4000/api/user/user_through_token`, {
           headers: {
             'Authorization': `${token}`
           }
@@ -59,7 +59,7 @@ export function AuthContextProvider({children}) {
 
   useEffect(() => {
     if (profileData) {
-      axios.get(`https://galeria-imagenes-pi.vercel.app/api/user/show_image/${profileData.photo}`, {
+      axios.get(`http://localhost:4000/api/user/show_image/${profileData.photo}`, {
         responseType: 'blob' // Esto indica que esperas una respuesta en formato Blob.
       })
         .then((res) => {

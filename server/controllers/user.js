@@ -255,6 +255,8 @@ const update = (req, res) => {
 const upload_image = (req, res) => {
   let id = req.user.id;
 
+  console.log(req.file)
+
   if (!req.file) {
     return res.status(500).json({
       status: "Error",

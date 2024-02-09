@@ -20,7 +20,7 @@ export function ProfileContainer() {
 
   useEffect(() => {
 
-    axios.get(`https://galeria-imagenes-pi.vercel.app/api/user/profile/${user.id}`, {
+    axios.get(`http://localhost:4000/api/user/profile/${user.id}`, {
       headers: {
         'Authorization': `${token}`
       }
@@ -46,7 +46,7 @@ export function ProfileContainer() {
 
   useEffect(()=>{
 
-    axios.get(`https://galeria-imagenes-pi.vercel.app/api/follow/followsUserIds/${id}`)
+    axios.get(`http://localhost:4000/api/follow/followsUserIds/${id}`)
       .then((res)=>{
         setCountFollowing(res.data.following.length);
         setCountFollowers(res.data.followers.length)

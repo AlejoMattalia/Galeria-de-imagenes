@@ -5,10 +5,11 @@ import { Search } from "./elementsNavBar/Search";
 import { TooltipIcon } from "./elementsNavBar/TooltipIcon"
 import SearchIcon from '@mui/icons-material/Search';
 import { Link } from "react-router-dom"
+import { ModalCreatePublication } from "./elementsNavBar/ModalCreatePublication";
 
 export function NavBar({data}) {
 
-  const {showSearch, setShowSearch} = data;
+  const {showSearch, setShowSearch, openModalCreatePublication, setOpenModalCreatePublication} = data;
 
   return (
     <>
@@ -28,8 +29,8 @@ export function NavBar({data}) {
           <div className="relative left-3 sm:hidden">
             <SearchIcon sx={{ color: "#fff", fontSize: "28px" }} onClick={() => setShowSearch(!showSearch)} />
           </div>
-          <div className="relative left-3">
-            <TooltipIcon />
+          <div className="relative left-3" onClick={()=>setOpenModalCreatePublication(true)}>
+            <TooltipIcon/>
           </div>
           <AccountMenu />
         </div>
@@ -38,6 +39,8 @@ export function NavBar({data}) {
       <div className="sm:hidden">
         <Search showSearch={showSearch} />
       </div>
+
+      <ModalCreatePublication open={openModalCreatePublication} setOpen={setOpenModalCreatePublication}/>
     </>
   )
 }

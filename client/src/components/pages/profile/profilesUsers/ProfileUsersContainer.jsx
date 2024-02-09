@@ -24,7 +24,7 @@ export function ProfileUsersContianer() {
   useEffect(() => {
 
     if (id) {
-      axios.get(`https://galeria-imagenes-pi.vercel.app/api/user/profile/${id}`)
+      axios.get(`http://localhost:4000/api/user/profile/${id}`)
         .then((res) => {
           setProfileDataUsers(res.data.user)
         })
@@ -37,7 +37,7 @@ export function ProfileUsersContianer() {
 
   useEffect(() => {
     if (profileDataUsers) {
-      axios.get(`https://galeria-imagenes-pi.vercel.app/api/user/show_image/${profileDataUsers.photo}`, {
+      axios.get(`http://localhost:4000/api/user/show_image/${profileDataUsers.photo}`, {
         responseType: 'blob' // Esto indica que esperas una respuesta en formato Blob.
       })
         .then((res) => {
@@ -54,7 +54,7 @@ export function ProfileUsersContianer() {
   useEffect(()=>{
 
     if(id && user && token){
-      axios.get(`https://galeria-imagenes-pi.vercel.app/api/follow/follow_info/${id}`, {
+      axios.get(`http://localhost:4000/api/follow/follow_info/${id}`, {
         headers: {
           'Authorization': `${token}`
         }
@@ -86,7 +86,7 @@ export function ProfileUsersContianer() {
   useEffect(()=>{
 
     if(id){
-      axios.get(`https://galeria-imagenes-pi.vercel.app/api/follow/followsUserIds/${id}`)
+      axios.get(`http://localhost:4000/api/follow/followsUserIds/${id}`)
         .then((res)=>{
           setCountFollowing(res.data.following.length);
           setCountFollowers(res.data.followers.length)
@@ -102,7 +102,7 @@ export function ProfileUsersContianer() {
 
     if (id && user && token) {
 
-      axios.post("https://galeria-imagenes-pi.vercel.app/api/follow/follow_to_user", { followed: id }, {
+      axios.post("http://localhost:4000/api/follow/follow_to_user", { followed: id }, {
         headers: {
           'Authorization': `${token}`
         }
@@ -148,7 +148,7 @@ export function ProfileUsersContianer() {
 
     if (id) {
       console.log(id)
-      axios.delete(`https://galeria-imagenes-pi.vercel.app/api/follow/un_follow/${id}`, {
+      axios.delete(`http://localhost:4000/api/follow/un_follow/${id}`, {
         headers: {
           'Authorization': `${token}`
         }
